@@ -1,0 +1,13 @@
+{
+    "PLATFORM": "api",
+    "BASE_URL": "https://reqres.in/",
+    "ON": "local",
+    "ENV": "qa",
+    "LOGS": true,
+    "SUITE": {
+        "DEFAULT": {
+            "TDD": [],
+            "BDD": []
+        }
+    }
+}
