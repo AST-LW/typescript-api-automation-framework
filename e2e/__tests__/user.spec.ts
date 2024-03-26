@@ -1,12 +1,8 @@
-import fetch from "node-fetch";
 import { UserClient } from "../clients/user.client";
+import data from "../respository/user/create-user.reposiotry.json";
 
 describe("User end-point tests", () => {
     test("Successful creation of user account", async () => {
-        const data = {
-            name: "morpheus",
-            job: "leader",
-        };
         const response = await UserClient().createUser(data);
 
         expect(response.statusCode).toBe(201);
