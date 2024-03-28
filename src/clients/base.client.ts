@@ -1,22 +1,28 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ENV } from "../utils/env.loader";
 
 type HttpMethod = {
-    method: "get" | "post" | "patch" | "put" | "delete";
+    method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 };
 
-type RequestConfig = {
+interface RequestConfig<T> {
     method?: any;
     url?: any;
-    params?: any;
-    data?: any;
-    headers?: any;
-};
+    params?: { [key: string]: string };
+    data?: T;
+    headers?: { [key: string]: string };
+}
 
-export class Request {
+interface ResponseConfig<U> {
+    statusCode?: number;
+    data?: U;
+    headers?: { [key: string]: string };
+}
+
+export class Request<T, U> {
     private readonly baseUrl: string;
     private readonly client: AxiosInstance;
-    private config: RequestConfig;
+    private config: RequestConfig<T>;
 
     constructor() {
         this.baseUrl = ENV.getConfigEnv("BASE_URL");
@@ -34,8 +40,6 @@ export class Request {
         );
 
         this.config = {};
-
-        console.log(this.baseUrl);
     }
 
     method(method: HttpMethod) {
@@ -48,31 +52,38 @@ export class Request {
         return this;
     }
 
-    params(params: any) {
-        this.config.params = {
-            ...params,
-        };
-        return this;
-    }
+    headers(headers: { [key: string]: string }) {
+        this.config.headers = this.config.headers || {}; // Initialize this.config.headers if it's not already defined
 
-    payload(payload: any) {
-        this.config.data = {
-            ...payload,
-        };
-        return this;
-    }
-
-    headers(headers: any) {
+        this.config.headers["Content-Type"] = "application/json";
         this.config.headers = {
             ...headers,
         };
         return this;
     }
 
-    async send() {
+    params(params: { [key: string]: string }) {
+        this.config.params = {
+            ...params,
+        };
+        return this;
+    }
+
+    payload(payload: T) {
+        this.config.data = {
+            ...payload,
+        };
+        return this;
+    }
+
+    async send(): Promise<ResponseConfig<U>> {
         try {
             const response: AxiosResponse = await this.client.request(this.config);
-            return response;
+            return {
+                statusCode: response.status,
+                data: response.data as U,
+                headers: response.headers as { [key: string]: string },
+            };
         } catch (error) {
             console.error(
                 `Error with ${this.config.method.toUpperCase()} request:`,
@@ -82,9 +93,7 @@ export class Request {
         }
     }
 
-    static builder(): Request {
+    static builder<T, U>(): Request<T, U> {
         return new Request();
     }
 }
-
-Request.builder();
