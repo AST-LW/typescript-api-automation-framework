@@ -1,9 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { ENV } from "../utils/env.loader";
+import { ENV } from "./env.loader";
 
-type HttpMethod = {
-    method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
-};
+type HttpMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
 interface RequestConfig<T> {
     method?: any;
@@ -13,7 +11,7 @@ interface RequestConfig<T> {
     headers?: { [key: string]: string };
 }
 
-interface ResponseConfig<U> {
+export interface ResponseConfig<U> {
     statusCode?: number;
     data?: U;
     headers?: { [key: string]: string };
