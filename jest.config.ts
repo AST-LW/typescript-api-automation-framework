@@ -8,13 +8,14 @@ const config: Config.InitialOptions = {
         "^.+\\.tsx?$": "ts-jest",
     },
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+    testRunner: "jasmine2",
+    setupFilesAfterEnv: ["./node_modules/jest-allure/dist/setup"],
     reporters: [
+        "default",
         [
-            "jest-html-reporter",
+            "jest-allure",
             {
-                outputPath: "./reports/test-report.html",
-                pageTitle: "E2E Test Suite",
-                includeFailureMsg: true,
+                outputPath: "./reports/allure-results",
             },
         ],
     ],
