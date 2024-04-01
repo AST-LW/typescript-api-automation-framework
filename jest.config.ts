@@ -11,7 +11,9 @@ const config: Config.InitialOptions = {
     },
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
     testRunner: "jasmine2",
+    setupFiles: ["./setup/jest.setup.ts"],
     setupFilesAfterEnv: ["./node_modules/jest-allure/dist/setup"],
+    maxWorkers: 5,
     reporters: [
         "default",
         [

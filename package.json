@@ -24,6 +24,9 @@
         "axios": "^1.6.8",
         "glob": "^10.3.10",
         "jsonpath": "^1.1.1",
-        "shelljs": "^0.8.5"
+        "reflect-metadata": "^0.2.2",
+        "shelljs": "^0.8.5",
+        "typedi": "^0.10.0",
+        "winston": "^3.13.0"
     }
 }
