@@ -4,6 +4,8 @@ const config: Config.InitialOptions = {
     rootDir: ".",
     testEnvironment: "node",
     testMatch: ["<rootDir>/tests/**/*.spec.ts"],
+    globalSetup: "./setup/global-setup.ts",
+    globalTeardown: "./setup/global-teardown.ts",
     transform: {
         "^.+\\.tsx?$": "ts-jest",
     },
