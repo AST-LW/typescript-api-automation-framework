@@ -1,15 +1,18 @@
 import { Service } from "typedi";
 import winston from "winston";
+import path from "path";
 
 export abstract class Logger {
-    abstract getLoggerInstance(): any;
+    abstract info(message: string): void;
+    abstract warn(message: string): void;
+    abstract error(message: string): void;
 }
 
 @Service({ transient: true })
 export class WinstonLogger implements Logger {
     private loggerInstance: winston.Logger;
 
-    constructor(private logFilePath: string) {
+    constructor(private readonly testFilename: string) {
         this.loggerInstance = winston.createLogger({
             level: "info",
             format: winston.format.combine(
@@ -23,11 +26,23 @@ export class WinstonLogger implements Logger {
                     },
                 })
             ),
-            transports: [new winston.transports.File({ filename: this.logFilePath })],
+            transports: [
+                new winston.transports.File({
+                    filename: path.join(process.cwd(), "logs", `${this.testFilename}.log`),
+                }),
+            ],
         });
     }
 
-    getLoggerInstance() {
-        return this.loggerInstance;
+    info(message: string): void {
+        this.loggerInstance.info(message);
+    }
+
+    warn(message: string): void {
+        this.loggerInstance.warn(message);
+    }
+
+    error(message: string): void {
+        this.loggerInstance.error(message);
     }
 }

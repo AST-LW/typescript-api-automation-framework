@@ -27,6 +27,7 @@
         "reflect-metadata": "^0.2.2",
         "shelljs": "^0.8.5",
         "typedi": "^0.10.0",
+        "uuid": "^9.0.1",
         "winston": "^3.13.0"
     }
 }

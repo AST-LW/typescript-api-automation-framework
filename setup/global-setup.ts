@@ -1,5 +1,5 @@
 import "reflect-metadata";
 
 export default async () => {
-    console.log("This is global setup");
+    console.log(process.env.JEST_WORKER_ID);
 };

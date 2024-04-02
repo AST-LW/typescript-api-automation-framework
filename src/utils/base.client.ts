@@ -1,5 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { ENV } from "./env-loader";
+import Container, { Service } from "typedi";
+
+import { Logger } from "./winston-logger";
+import { LoggerToken } from "../../setup/globals";
+import { CONFIG } from "../../config";
 
 type HttpMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
 
@@ -17,13 +21,17 @@ export interface ResponseConfig<U> {
     headers?: { [key: string]: string };
 }
 
+@Service({ transient: true })
 export class Request<T, U> {
     private readonly baseUrl: string;
     private readonly client: AxiosInstance;
+    private readonly logger: Logger;
+
     private config: RequestConfig<T>;
 
     constructor() {
-        this.baseUrl = ENV.getConfigEnv("BASE_URL");
+        this.baseUrl = CONFIG.BASE_URL;
+
         this.client = axios.create({
             baseURL: this.baseUrl,
         });
@@ -38,6 +46,8 @@ export class Request<T, U> {
         );
 
         this.config = {};
+
+        this.logger = Container.get(LoggerToken);
     }
 
     method(method: HttpMethod) {
@@ -46,6 +56,7 @@ export class Request<T, U> {
     }
 
     resourceEndpoint(resourceEndpoint: string) {
+        this.logger.info(resourceEndpoint);
         this.config.url = resourceEndpoint;
         return this;
     }
@@ -92,6 +103,6 @@ export class Request<T, U> {
     }
 
     static builder<T, U>(): Request<T, U> {
-        return new Request();
+        return new Request<T, U>();
     }
 }

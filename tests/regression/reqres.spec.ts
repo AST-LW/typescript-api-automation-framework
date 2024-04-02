@@ -1,20 +1,20 @@
 import Container from "typedi";
 
-import { UserClient } from "../src/clients/user.client";
-import { Logger, WinstonLogger } from "../src/utils/winston-logger";
+import { UserClient } from "../../src/clients/user.client";
+import { loggerInitializationHook } from "../../setup/hooks";
 
 let userClient: UserClient;
 
 beforeEach(() => {
-    const testName = expect.getState().currentTestName;
-    const loggerFilePath = process.cwd() + "/logs/" + testName + ".log";
-    Container.set(Logger, new WinstonLogger(loggerFilePath) as Logger);
+    // Logger initialization
+    loggerInitializationHook(expect.getState().currentTestName as string);
 
+    //  Fetching the client objects
     userClient = Container.get(UserClient);
 });
 
 describe("User CRUD Suite", () => {
-    it("Register user successfully", async () => {
+    it("@TEST_ID-1 Register user successfully", async () => {
         const data = {
             email: "eve.holt@reqres.in",
             password: "pistol",
