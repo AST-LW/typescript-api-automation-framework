@@ -4,6 +4,7 @@ import { UserClient } from "../../src/clients/user.client";
 import { loggerInitializationHook } from "../../setup/hooks";
 import { DataGenerator } from "../../src/utils/data-generator";
 import userStaticData from "../data/user.json";
+import { Actions } from "../../src/actions/action-lookup";
 
 let userClient: UserClient;
 
@@ -27,7 +28,7 @@ describe("User CRUD Suite", () => {
             email,
         };
 
-        const response = await userClient.createUser(data);
+        const response = await Actions.user.createUser(data);
 
         expect(response.statusCode).toBe(201);
         expect(response.data?.user_id).toBeTruthy();
