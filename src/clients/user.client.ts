@@ -1,14 +1,15 @@
 import { Service } from "typedi";
-import { RegisterRequestModel } from "../models/request/register.request.model";
-import { RegisterResponseModel } from "../models/response/register.response.model";
+
 import { Request, ResponseConfig } from "../utils/base.client";
+import { CreateUserRequestModel } from "../models/request/user/create-user.request.model";
+import { CreateUserResponseModel } from "../models/response/user/create-user.response.model";
 
 @Service({ transient: true })
 export class UserClient {
-    async registerUser(data: RegisterRequestModel): Promise<ResponseConfig<RegisterResponseModel>> {
-        const response = await Request.builder<RegisterRequestModel, RegisterResponseModel>()
+    async createUser(data: CreateUserRequestModel): Promise<ResponseConfig<CreateUserResponseModel>> {
+        const response = await Request.builder<CreateUserRequestModel, CreateUserResponseModel>()
             .method("POST")
-            .resourceEndpoint("/api/register")
+            .resourceEndpoint("todos/user/create")
             .payload(data)
             .send();
 

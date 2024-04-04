@@ -3,7 +3,7 @@ import type { Config } from "@jest/types";
 const config: Config.InitialOptions = {
     rootDir: ".",
     testEnvironment: "node",
-    testMatch: [`<rootDir>/tests/${(process.env.SUITE as string) || "sanity"}/**/*.spec.ts`],
+    testMatch: [`<rootDir>/tests/${(process.env.SUITE as string) || "regression"}/**/*.spec.ts`],
     globalSetup: "./setup/global-setup.ts",
     globalTeardown: "./setup/global-teardown.ts",
     transform: {
@@ -14,6 +14,7 @@ const config: Config.InitialOptions = {
     setupFiles: ["./setup/jest.setup.ts"],
     setupFilesAfterEnv: ["./node_modules/jest-allure/dist/setup"],
     maxWorkers: 5,
+    testTimeout: 10000,
     reporters: [
         "default",
         [

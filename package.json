@@ -3,7 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "scripts": {},
+    "scripts": {
+        "clear-reports": "chmod +x scripts/clear-reports.sh && scripts/clear-reports.sh",
+        "test": "npm run clear-reports && jest"
+    },
     "keywords": [],
     "author": "AST-LW",
     "license": "ISC",
@@ -21,6 +24,7 @@
         "typescript": "^5.4.3"
     },
     "dependencies": {
+        "@faker-js/faker": "^8.4.1",
         "axios": "^1.6.8",
         "glob": "^10.3.10",
         "jsonpath": "^1.1.1",

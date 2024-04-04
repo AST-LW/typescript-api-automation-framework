@@ -38,9 +38,21 @@ export class Request<T, U> {
 
         this.client.interceptors.response.use(
             (response) => {
+                this.logger.info(
+                    JSON.stringify({
+                        statusCode: response.status,
+                        data: response.data as U,
+                        headers: response.headers as { [key: string]: string },
+                    })
+                );
                 return response;
             },
             (error) => {
+                this.logger.error(
+                    JSON.stringify({
+                        error: error.response,
+                    })
+                );
                 return error.response;
             }
         );
@@ -56,7 +68,6 @@ export class Request<T, U> {
     }
 
     resourceEndpoint(resourceEndpoint: string) {
-        this.logger.info(resourceEndpoint);
         this.config.url = resourceEndpoint;
         return this;
     }
@@ -82,11 +93,13 @@ export class Request<T, U> {
         this.config.data = {
             ...payload,
         };
+        this.logger.info(JSON.stringify(payload));
         return this;
     }
 
     async send(): Promise<ResponseConfig<U>> {
         try {
+            this.logger.info(JSON.stringify(this.config));
             const response: AxiosResponse = await this.client.request(this.config);
             return {
                 statusCode: response.status,
@@ -94,11 +107,12 @@ export class Request<T, U> {
                 headers: response.headers as { [key: string]: string },
             };
         } catch (error) {
-            console.error(
-                `Error with ${this.config.method.toUpperCase()} request:`,
-                (error as any).response || (error as any).message
-            );
-            throw error;
+            this.logger.error((error as any).message);
+            return {
+                statusCode: 0,
+                data: {} as U,
+                headers: {},
+            };
         }
     }
 
