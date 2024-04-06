@@ -1,4 +1,4 @@
-export interface CreateTodoResponseModel {
+export interface SuccessfulTaskCreationResponseModel {
     todo_id: string;
     title: string;
     description: string;

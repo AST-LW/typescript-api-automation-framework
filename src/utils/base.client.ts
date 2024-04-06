@@ -50,7 +50,8 @@ export class Request<T, U> {
             (error) => {
                 this.logger.error(
                     JSON.stringify({
-                        error: error.response,
+                        statusCode: error.response?.status,
+                        message: error.message,
                     })
                 );
                 return error.response;
