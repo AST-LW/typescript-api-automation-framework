@@ -21,6 +21,7 @@ const config: Config.InitialOptions = {
             "jest-allure",
             {
                 outputPath: "./reports/allure-results",
+                resultsFormat: "json",
             },
         ],
     ],
