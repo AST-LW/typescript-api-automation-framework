@@ -46,7 +46,7 @@ jobs:
 
             - name: Execute test suite
               run: |
-                  ENV=${{ github.event.inputs.environment }} npm run test --maxWorkers=${{ github.event.inputs.instances }}
+                  ENV=${{ github.event.inputs.environment }} SUITE=${{ github.event.inputs.suite }} npm run test --maxWorkers=${{ github.event.inputs.instances }}
               continue-on-error: true
 
             - name: Upload Allure results
