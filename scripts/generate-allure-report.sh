@@ -21,4 +21,4 @@ fi
 mkdir -p "$ALLURE_REPORT_DIR"
 
 # Generate allure report from allure results
-allure generate "$ALLURE_RESULTS_DIR" --clean -o "$ALLURE_REPORT_DIR"
+npx allure generate "$ALLURE_RESULTS_DIR" --clean -o "$ALLURE_REPORT_DIR"
