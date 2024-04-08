@@ -1,7 +1,7 @@
 import Container from "typedi";
 
 import { UserClient } from "../../src/clients/user.client";
-import { loggerInitializationHook } from "../../setup/hooks";
+import { addLogsToAllure, loggerInitializationHook } from "../../setup/within-hooks";
 import { Actions } from "../../src/actions/action-lookup";
 import { RequestDataGenerator } from "../../src/utils/request-data-generator";
 import { SuccessfulUserCreationRequestModel, WithoutEmailRequestModel } from "../../src/models/request/user";
@@ -14,6 +14,10 @@ beforeEach(() => {
 
     //  Fetching the client objects
     userClient = Container.get(UserClient);
+});
+
+afterEach(() => {
+    addLogsToAllure(expect.getState().currentTestName as string);
 });
 
 describe("User Suite", () => {

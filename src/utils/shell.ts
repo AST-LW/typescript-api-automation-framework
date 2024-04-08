@@ -37,12 +37,18 @@ export class ShellScripts {
     static __cat({ filePath, type }) {
         switch (type) {
             case "txt":
-                return shell.cat(filePath);
+                return shell.cat(filePath).toString();
             case "json":
                 return JSON.parse(shell.cat(filePath));
             case "log":
                 return shell.cat(filePath).toString();
+            default:
+                throw new Error(`Unsupported file type: ${type}`);
         }
+    }
+
+    static readFileContents(filePath, type = "txt") {
+        return ShellScripts.__cat({ filePath, type });
     }
 
     static readFileWithBasedOnPattern(filePattern: string, type = "txt") {

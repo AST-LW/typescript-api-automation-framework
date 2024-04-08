@@ -1,6 +1,6 @@
 import Container from "typedi";
 
-import { loggerInitializationHook } from "../../setup/hooks";
+import { addLogsToAllure, loggerInitializationHook } from "../../setup/within-hooks";
 import { Actions } from "../../src/actions/action-lookup";
 import { RequestDataGenerator } from "../../src/utils/request-data-generator";
 import { SuccessfulTaskCreationRequestModel } from "../../src/models/request/tasks/create-task.request.model";
@@ -14,6 +14,10 @@ beforeEach(() => {
 
     //  Fetching the client objects
     taskClient = Container.get(TasksClient);
+});
+
+afterEach(() => {
+    addLogsToAllure(expect.getState().currentTestName as string);
 });
 
 describe("Tasks Suite", () => {
