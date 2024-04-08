@@ -13,7 +13,7 @@ const config: Config.InitialOptions = {
     testRunner: "jasmine2",
     setupFiles: ["./setup/jest.setup.ts"],
     setupFilesAfterEnv: ["./node_modules/jest-allure/dist/setup"],
-    maxWorkers: 5,
+    maxWorkers: parseInt(process.env.instances as string) || 1,
     testTimeout: 10000,
     reporters: [
         "default",
