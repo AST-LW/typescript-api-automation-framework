@@ -41,6 +41,7 @@ const extractAllureSummary = async () => {
         // Additional metadata
         summary["env"] = process.env.ENV || "qa";
         summary["suite"] = StringOperations.capitalizeFirstLetter(process.env.SUITE || "regression");
+        console.log(summary);
 
         // Format the total duration into hours, minutes, and seconds
         (summary as any).totalDuration = formatDuration(summary.totalDurationMs);

@@ -48,8 +48,10 @@ jobs:
         env:
           ENV: ${{ github.event.inputs.environment }}
           SUITE: ${{ github.event.inputs.suite }}
-          instances: ${{ github.event.inputs.instances }}
+          INSTANCES: ${{ github.event.inputs.instances }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
+          echo 
           bash scripts/pipeline-main-execution.sh
         continue-on-error: true
 
@@ -64,6 +66,4 @@ jobs:
           retention-days: 15
 
       - name: Send Slack Notification
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: bash scripts/slack-notification.sh
