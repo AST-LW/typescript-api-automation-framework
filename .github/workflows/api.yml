@@ -63,33 +63,6 @@ jobs:
           path: allure-results.zip
           retention-days: 15
 
-      - name: Generate Allure Report
-        run: bash scripts/generate-allure-report.sh
-
-      - name: Get Allure history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure report action
-        uses: simple-elf/allure-report-action@master
-        if: always()
-        with:
-          allure_results: allure-results
-          allure_history: gh-pages/allure-history
-          keep_reports: 5
-
-      - name: Deploy Allure report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: gh-pages/allure-history
-
       - name: Send Slack Notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
