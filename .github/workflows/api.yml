@@ -32,6 +32,11 @@ on:
 jobs:
   test-execution:
     runs-on: ubuntu-latest
+    env:
+      ENV: ${{ github.event.inputs.environment }}
+      SUITE: ${{ github.event.inputs.suite }}
+      INSTANCES: ${{ github.event.inputs.instances }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -45,11 +50,6 @@ jobs:
         run: npm ci
 
       - name: Execute test suite
-        env:
-          ENV: ${{ github.event.inputs.environment }}
-          SUITE: ${{ github.event.inputs.suite }}
-          INSTANCES: ${{ github.event.inputs.instances }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           echo 
           bash scripts/pipeline-main-execution.sh
