@@ -93,8 +93,6 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        ls -a
-        ls ./shard-workspace
         docker build --cache-from=base-image -t docker-${{ matrix.container }} -f ./shard-workspace/Dockerfile_container_${{ matrix.container }} .
 
     - name: Run Docker Container
@@ -105,3 +103,35 @@ jobs:
           -e INSTANCES=${{ env.INSTANCES }} \
           -e SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL }} \
           docker-${{ matrix.container }}
+
+    - name: Upload Allure Results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-results-${{ matrix.container }}
+        path: allure-results-${{ matrix.container }}
+
+  combine-allure-results:
+    name: Combine Allure Results
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Allure Results
+        run: |
+          ls -a
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     path: allure-results
+
+      # - name: Combine Allure Results
+      #   run: |
+      #     mkdir -p combined-allure-results
+      #     for dir in allure-results/*; do
+      #       cp -r ${dir}/. combined-allure-results
+      #     done
+
+      # - name: Upload Combined Allure Results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: combined-allure-results
+      #     path: combined-allure-results
