@@ -6,6 +6,7 @@ LOG_FOLDER="./logs"
 # Set the path to the allure results & reports folder
 ALLURE_RESULTS_FOLDER="./allure-results"
 ALLURE_REPORT_FOLDER="./allure-report"
+TEST_SUMMARY_FILE="./test-summary.json"
 
 # Function to remove a folder if it exists
 remove_folder() {
@@ -28,3 +29,7 @@ remove_folder "$ALLURE_RESULTS_FOLDER" "allure-results"
 
 # Remove the allure-report folder if it exists
 remove_folder "$ALLURE_REPORT_FOLDER" "allure-report"
+
+# Remove the test summary json file
+echo "test-summary file removed successfully."
+rm -rf "$TEST_SUMMARY_FILE"
