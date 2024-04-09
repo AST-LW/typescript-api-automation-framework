@@ -51,7 +51,7 @@ const extractAllureSummary = async () => {
         throw error;
     }
 
-    fs.writeFileSync(process.cwd() + "/test-summary.json", JSON.stringify(summary));
+    fs.writeFileSync(process.cwd() + "/test-summary.json", JSON.stringify(summary), "utf-8");
     return summary;
 };
 

@@ -64,6 +64,3 @@ jobs:
           name: allure-results
           path: allure-results.zip
           retention-days: 15
-
-      - name: Send Slack Notification
-        run: bash scripts/slack-notification.sh
