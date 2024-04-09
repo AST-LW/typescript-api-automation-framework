@@ -21,6 +21,7 @@ env=$(echo "$test_summary" | grep "\"env\"" | awk -F ': ' '{print $2}' | tr -d '
 suite_name=$(echo "$test_summary" | grep "\"suite\"" | awk -F ': ' '{print $2}' | tr -d ',"}')
 total_duration=$(echo "$test_summary" | grep "totalDuration" | awk -F ': ' '{print $2}' | tr -d '",}')
 
+ls -a
 echo "Total Passed: $total_passed"
 echo "Total Failed: $total_failed"
 echo "Total Broken: $total_broken"
