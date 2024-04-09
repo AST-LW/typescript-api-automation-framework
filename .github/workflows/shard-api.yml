@@ -40,10 +40,26 @@ jobs:
     - name: Generate Dockerfiles
       run: |
         bash scripts/pipeline-shard-execution.sh
-        
+
     - name: Build Base Image
       run: |
         docker build -t base-image -f ./shard-workspace/Dockerfile_base .
+
+    - name: Export Base Image
+      run: |
+        docker save base-image -o base-image.tar
+        
+    - name: Upload Base Image
+      uses: actions/upload-artifact@v3
+      with:
+        name: base-image
+        path: base-image.tar
+        
+    - name: Upload Shard Workspace
+      uses: actions/upload-artifact@v3
+      with:
+        name: shard-workspace
+        path: shard-workspace
 
   build-and-test:
     name: Build and Test
@@ -58,7 +74,21 @@ jobs:
       INSTANCES: ${{ github.event.inputs.instances }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+
+    - name: Download Base Image
+      uses: actions/download-artifact@v3
+      with:
+        name: base-image
+        
+    - name: Download Shard Workspace
+      uses: actions/download-artifact@v3
+      with:
+        name: shard-workspace
+        
+    - name: Import Base Image
+      run: |
+        docker load -i base-image.tar
 
     - name: Build Docker Image
       run: |
