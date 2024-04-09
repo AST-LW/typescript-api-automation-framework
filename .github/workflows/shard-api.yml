@@ -125,9 +125,7 @@ jobs:
       - name: Combine Allure Results
         run: |
           mkdir -p combined-allure-results
-          for dir in allure-results/*; do
-            cp -r ${dir}/. combined-allure-results
-          done
+          find allure-results -name "*.xml" -exec cp {} combined-allure-results \;
 
       - name: Upload Combined Allure Results
         uses: actions/upload-artifact@v3
