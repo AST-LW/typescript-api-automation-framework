@@ -10,7 +10,8 @@ if [ -z "$webhook_url" ]; then
 fi
 
 # Read test summary from a JSON file
-test_summary=$(cat test-summary.json)
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+test_summary=$(cat $ROOT_DIR/test-summary.json)
 
 # Extract properties using grep and awk
 total_passed=$(echo "$test_summary" | grep "totalPassed" | awk -F ': ' '{print $2}' | tr -d ',}')
