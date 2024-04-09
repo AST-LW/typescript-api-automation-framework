@@ -27,10 +27,8 @@ total_failed=$(echo "$test_summary" | jq '.totalFailed')
 total_broken=$(echo "$test_summary" | jq '.totalBroken')
 env=$(echo "$test_summary" | jq -r '.env')
 suite_name=$(echo "$test_summary" | jq -r '.suite')
-total_duration=$(echo "$test_summary" | jq '.totalDuration')
+total_duration=$(echo "$test_summary" | jq -r '.totalDuration')
 
-cat jest.config.ts
-ls -a
 echo "Total Passed: $total_passed"
 echo "Total Failed: $total_failed"
 echo "Total Broken: $total_broken"
