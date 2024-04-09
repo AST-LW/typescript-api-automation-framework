@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set the test directory and suite name
-test_dir="./tests/regression/sample"
-suite_name="sample"
+suite_name=$SUITE
+test_dir="./tests/$suite_name"
 
 # Get the list of test files based on the suite name
 test_files=($(find "${test_dir}" -name "*.spec.ts" -type f))
