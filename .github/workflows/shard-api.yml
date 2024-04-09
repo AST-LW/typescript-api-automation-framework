@@ -94,6 +94,7 @@ jobs:
     - name: Build Docker Image
       run: |
         ls -a
+        ls ./shard-workspace
         docker build --cache-from=base-image -t docker-${{ matrix.container }} -f ./shard-workspace/Dockerfile_container_${{ matrix.container }} .
 
     - name: Run Docker Container
