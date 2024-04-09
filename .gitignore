@@ -6,3 +6,4 @@ allure-report/
 logs/
 *.log
 test-summary.json
+shard-workspace/

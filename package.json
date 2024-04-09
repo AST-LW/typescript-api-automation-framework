@@ -4,8 +4,6 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "clear-reports": "chmod +x scripts/clear-reports.sh && scripts/clear-reports.sh",
-        "test": "npm run clear-reports && jest"
     },
     "keywords": [],
     "author": "AST-LW",

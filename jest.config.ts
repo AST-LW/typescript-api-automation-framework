@@ -3,7 +3,10 @@ import type { Config } from "@jest/types";
 const config: Config.InitialOptions = {
     rootDir: ".",
     testEnvironment: "node",
-    testMatch: [`<rootDir>/tests/${(process.env.SUITE as string) || "regression"}/**/*.spec.ts`],
+    // testMatch: [`<rootDir>/tests/${(process.env.SUITE as string) || "regression"}/**/*.spec.ts`],
+    testMatch: JSON.parse(process.env.TEST_SET as string) as string[] || [
+        `<rootDir>/tests/${(process.env.SUITE as string) || "regression"}/**/*.spec.ts`,
+    ],
     globalSetup: "./setup/global-setup.ts",
     globalTeardown: "./setup/global-teardown.ts",
     transform: {
