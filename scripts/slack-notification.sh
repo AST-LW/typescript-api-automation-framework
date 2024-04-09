@@ -12,13 +12,13 @@ fi
 # Read test summary from a JSON file
 test_summary=$(cat test-summary.json)
 
-# Extract properties from the JSON using awk and ensure proper escaping of JSON values
-suite_name=$(echo "$test_summary" | awk -F '[:,]' '/suite/ {gsub(/["{} ]/, "", $2); print $2}')
-total_passed=$(echo "$test_summary" | awk -F '[:,]' '/totalPassed/ {gsub(/[" ]/, "", $2); print $2}')
-total_failed=$(echo "$test_summary" | awk -F '[:,]' '/totalFailed/ {gsub(/[" ]/, "", $2); print $2}')
-total_broken=$(echo "$test_summary" | awk -F '[:,]' '/totalBroken/ {gsub(/[" ]/, "", $2); print $2}')
-total_duration=$(echo "$test_summary" | awk -F '[:,]' '/totalDuration/ {gsub(/[" ]/, "", $2); print $2}')
-env=$(echo "$test_summary" | awk -F '[:,]' '/env/ {gsub(/[" ]/, "", $2); print $2}')
+# Extract properties from the JSON using grep and awk
+total_passed=$(echo "$test_summary" | grep "totalPassed" | awk -F ': ' '{print $2}' | tr -d ',')
+total_failed=$(echo "$test_summary" | grep "totalFailed" | awk -F ': ' '{print $2}' | tr -d ',')
+total_broken=$(echo "$test_summary" | grep "totalBroken" | awk -F ': ' '{print $2}' | tr -d ',')
+env=$(echo "$test_summary" | grep "env" | awk -F ': ' '{print $2}' | tr -d ',"')
+suite_name=$(echo "$test_summary" | grep "suite" | awk -F ': ' '{print $2}' | tr -d ',"')
+total_duration=$(echo "$test_summary" | grep "totalDuration" | awk -F ': ' '{print $2}' | tr -d '",')
 
 # Use total duration directly
 total_duration_formatted="$total_duration"
