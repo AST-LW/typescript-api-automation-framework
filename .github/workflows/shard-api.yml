@@ -102,6 +102,7 @@ jobs:
           -e SUITE=${{ env.SUITE }} \
           -e INSTANCES=${{ env.INSTANCES }} \
           -e SLACK_WEBHOOK_URL=${{ env.SLACK_WEBHOOK_URL }} \
+          -v ${PWD}/allure-results:/app/allure-results \
           docker-${{ matrix.container }}
 
     - name: Upload Allure Results
