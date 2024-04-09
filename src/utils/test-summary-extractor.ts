@@ -68,7 +68,7 @@ const formatDuration = (durationMs: number): string => {
     const minutesStr = minutes.toString().padStart(2, "0") + "m";
     const secondsStr = seconds.toString().padStart(2, "0") + "s";
 
-    return hoursStr + ":" + minutesStr + ":" + secondsStr;
+    return hoursStr + "-" + minutesStr + "-" + secondsStr;
 };
 
 extractAllureSummary();
