@@ -1,4 +1,4 @@
-name: Parallel Shard Execution
+name: API Test Suite Parallel Shard Execution
 
 on:
   workflow_dispatch:
@@ -126,7 +126,7 @@ jobs:
       - name: Combine Allure Results
         run: |
           mkdir -p combined-allure-results
-          find allure-results -name "*.xml" -exec cp {} combined-allure-results \;
+          find allure-results -name "*.xml" -or -name "*.txt" -exec cp {} combined-allure-results \;
 
       - name: Upload Combined Allure Results
         uses: actions/upload-artifact@v3
