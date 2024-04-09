@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run the tests using Jest
-SUITE=$SUITE ENV=$ENV npm run test --maxWorkers=$INSTANCES
+SUITE=$SUITE ENV=$ENV INSTANCES=$INSTANCES npm run test
 
 # Execute generate-allure-report.sh script
 chmod +x scripts/generate-allure-report.sh

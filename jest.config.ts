@@ -26,6 +26,5 @@ const config: Config.InitialOptions = {
         ],
     ],
 };
-console.log(process.env.INSTANCES);
 
 export default config;

@@ -13,14 +13,6 @@ fi
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 test_summary=$(cat $ROOT_DIR/test-summary.json)
 
-# # Extract properties using grep and awk
-# total_passed=$(echo "$test_summary" | grep "totalPassed" | awk -F ': ' '{print $2}' | tr -d ',}')
-# total_failed=$(echo "$test_summary" | grep "totalFailed" | awk -F ': ' '{print $2}' | tr -d ',}')
-# total_broken=$(echo "$test_summary" | grep "totalBroken" | awk -F ': ' '{print $2}' | tr -d ',}')
-# env=$(echo "$test_summary" | grep "\"env\"" | awk -F ': ' '{print $2}' | tr -d ',"}')
-# suite_name=$(echo "$test_summary" | grep "\"suite\"" | awk -F ': ' '{print $2}' | tr -d ',"}')
-# total_duration=$(echo "$test_summary" | grep "totalDuration" | awk -F ': ' '{print $2}' | tr -d '",}')
-
 # Extract properties using jq
 total_passed=$(echo "$test_summary" | jq '.totalPassed')
 total_failed=$(echo "$test_summary" | jq '.totalFailed')
@@ -28,13 +20,6 @@ total_broken=$(echo "$test_summary" | jq '.totalBroken')
 env=$(echo "$test_summary" | jq -r '.env')
 suite_name=$(echo "$test_summary" | jq -r '.suite')
 total_duration=$(echo "$test_summary" | jq -r '.totalDuration')
-
-echo "Total Passed: $total_passed"
-echo "Total Failed: $total_failed"
-echo "Total Broken: $total_broken"
-echo "Environment: $env"
-echo "Suite Name: $suite_name"
-echo "Total Duration: $total_duration"
 
 # Use total duration directly
 total_duration_formatted="$total_duration"
