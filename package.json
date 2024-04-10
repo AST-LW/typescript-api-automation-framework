@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "test": "chmod +x scripts/util-scripts/execute-single-testcase.sh && scripts/util-scripts/execute-single-testcase.sh"
     },
     "keywords": [],
     "author": "AST-LW",

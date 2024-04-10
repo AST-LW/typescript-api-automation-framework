@@ -17,7 +17,7 @@ export class TasksClient {
         return response;
     }
 
-    async changeTaskStatus<U, V>(data, accessToken: string, taskID: string): Promise<ResponseConfig<V>> {
+    async changeTaskStatus<U, V>(data: U, accessToken: string, taskID: string): Promise<ResponseConfig<V>> {
         const response = await Request.builder<U, V>()
             .method("PATCH")
             .resourceEndpoint(`todos/tasks/status/${taskID}`)
@@ -25,6 +25,18 @@ export class TasksClient {
                 Authorization: `Bearer ${accessToken}`,
             })
             .payload(data)
+            .send();
+
+        return response;
+    }
+
+    async getTodos<U, V>(accessToken: string): Promise<ResponseConfig<V>> {
+        const response = await Request.builder<U, V>()
+            .method("GET")
+            .resourceEndpoint(`todos/tasks/read`)
+            .headers({
+                Authorization: `Bearer ${accessToken}`,
+            })
             .send();
 
         return response;

@@ -1,9 +1,11 @@
+import Container from "typedi";
+
 import { DataGenerator } from "./random-data-generator";
 import userStaticData from "../data/user.json";
-import Container from "typedi";
 import { UserClient } from "../clients/user.client";
 import { SuccessfulUserCreationResponseModel } from "../models/response/user/create-user.response.model";
 import { SuccessfulUserCreationRequestModel } from "../models/request/user";
+import { SuccessfulFetchOfNewAccessTokenResponseModel } from "../models/response/todos/create-todos.response.model";
 
 export class RequestDataGenerator {
     static createUserPayload(exclude: string[] = []): {
@@ -35,14 +37,22 @@ export class RequestDataGenerator {
         return payload;
     }
 
-    static createTaskPayload(): { title?: string; description?: string } {
-        const title = "This is the title of the task";
-        const description = "This is the description of the task";
+    static createTaskPayload(exclude: string[] = []): { title?: string; description?: string } {
+        const title = DataGenerator.generateTaskTitle();
+        const description = DataGenerator.generateTaskDescription();
 
-        return {
+        const payload = {
             title,
             description,
         };
+
+        for (let prop of exclude) {
+            if (payload.hasOwnProperty(prop)) {
+                delete payload[prop];
+            }
+        }
+
+        return payload;
     }
 
     static async fetchAccessToken(): Promise<string> {
@@ -52,6 +62,14 @@ export class RequestDataGenerator {
                 this.createUserPayload() as SuccessfulUserCreationRequestModel
             )
         ).data?.access_token as string;
+
+        return accessToken;
+    }
+
+    static async fetchNewAccessToken(userID: string): Promise<string> {
+        const userClient = Container.get(UserClient);
+        const accessToken = (await userClient.fetchNewAccessToken<SuccessfulFetchOfNewAccessTokenResponseModel>(userID))
+            .data?.access_token as string;
 
         return accessToken;
     }
