@@ -14,3 +14,7 @@ export interface GetTodosForNewUserResponseModel {
 export interface GetTodosForExistingUserResponseModel {
     todos: Todo[];
 }
+
+export interface GetTodoWithoutAccessTokenResponseModel {
+    message: string;
+}

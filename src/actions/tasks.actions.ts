@@ -10,6 +10,7 @@ import {
     WithoutTitleResponseModel,
 } from "../models/response/todos/create-todos.response.model";
 import {
+    GetTodoWithoutAccessTokenResponseModel,
     GetTodosForExistingUserResponseModel,
     GetTodosForNewUserResponseModel,
 } from "../models/response/todos/read-todos.response.model";
@@ -47,12 +48,19 @@ export class TasksActions {
 
     async getTodos(
         status: "new" | "existing",
-        userID?: string
-    ): Promise<ResponseConfig<GetTodosForNewUserResponseModel> | ResponseConfig<GetTodosForExistingUserResponseModel>> {
-        let accessToken: string;
+        { userID, accessToken }: { userID?: string; accessToken?: string | "" }
+    ): Promise<
+        | ResponseConfig<GetTodosForNewUserResponseModel>
+        | ResponseConfig<GetTodosForExistingUserResponseModel>
+        | ResponseConfig<GetTodoWithoutAccessTokenResponseModel>
+    > {
         let response:
             | ResponseConfig<GetTodosForNewUserResponseModel>
             | ResponseConfig<GetTodosForExistingUserResponseModel> = {};
+
+        if (accessToken === "") {
+            return await this.tasksClient.getTodos<any, GetTodoWithoutAccessTokenResponseModel>(accessToken);
+        }
 
         if (status === "new") {
             accessToken = await RequestDataGenerator.fetchAccessToken();
