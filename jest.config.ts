@@ -6,7 +6,7 @@ const config: Config.InitialOptions = {
     testMatch:
         (JSON.parse(process.env.TEST_SET || "[]") as string[]).length === 0
             ? [`<rootDir>/tests/${process.env.SUITE || "regression"}/**/*.spec.ts`]
-            : [],
+            : JSON.parse(process.env.TEST_SET as string),
     globalSetup: "./setup/global-setup.ts",
     globalTeardown: "./setup/global-teardown.ts",
     transform: {
