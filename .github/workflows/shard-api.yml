@@ -18,8 +18,15 @@ on:
           - "regression"
           - "sanity"
         default: "regression"
+      shards:
+        description: "Number of shards"
+        required: true
+        type: choice
+        options:
+          - "4"
+        default: "4"
       instances:
-        description: "Parallel instances"
+        description: "Parallel instances inside each shard"
         required: true
         type: choice
         options:
@@ -68,10 +75,11 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        container: [1, 2]  # Add more container numbers if needed
+        container: [1, 2, 3, 4]  # Add more container numbers if needed
     env:
       ENV: ${{ github.event.inputs.environment }}
       SUITE: ${{ github.event.inputs.suite }}
+      SHARDS: ${{ github.event.inputs.shards }}
       INSTANCES: ${{ github.event.inputs.instances }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:

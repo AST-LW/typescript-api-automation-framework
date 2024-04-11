@@ -11,7 +11,7 @@ test_files=($(find "${test_dir}" -name "*.spec.ts" -type f))
 total_files=${#test_files[@]}
 
 # Set the desired number of containers
-container_count=2
+container_count=$SHARDS
 
 # Set the CONTAINERS_COUNT environment variable
 export CONTAINERS_COUNT=$container_count
