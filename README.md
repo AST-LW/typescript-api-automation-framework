@@ -61,15 +61,15 @@ Welcome to the TypeScript Automation Framework repository! This framework is des
 
 ## Feature Table
 
-| Feature                              | Description                                     | Status | Customizable | Images (200x400)                                               |
+| Feature                              | Description                                     | Status | Customizable | Images                                                         |
 | ------------------------------------ | ----------------------------------------------- | ------ | ------------ | -------------------------------------------------------------- |
 | Allure Report                        | Generates detailed test execution reports       | ✓      | Yes          | ![Allure Report](./images/allure-example-template.png)         |
 | Slack Notification                   | Sends test execution notifications to Slack     | ✓      | Yes          | ![Slack Notification](./images/slack-example-template.png)     |
-| Email Notification                   | Sends test execution notifications via email    | ✓      | Yes          | ![Email Notification](https://example.com/email.png)           |
+| Email Notification                   | Sends test execution notifications via email    | ✓      | Yes          | ![Email Notification](./images/email-example-template.png)     |
 | Discord Notification                 | Sends test execution notifications to Discord   | ✓      | Yes          | ![Discord Notification](./images/discord-example-template.png) |
-| Logging                              | Logs test execution details                     | ✓      | Yes          | ![Logging](https://example.com/logging.png)                    |
+| Logging                              | Logs test execution details                     | ✓      | Yes          | ![Logging](./images/logs-example-template.png)                 |
+| CI/CD Integration (`Github Actions`) | Executes tests concurrently for faster run time | ✓      | Yes          | ![CI/CD Integration](./images/ci-cd-example-template.png)      |
 | Parallel Execution                   | Executes tests concurrently for faster run time | ✓      | Yes          |                                                                |
-| CI/CD Integration (`Github Actions`) | Executes tests concurrently for faster run time | ✓      | Yes          | ![CI/CD Integration](https://example.com/github-actions.png)   |
 
 I've added an "Images" section with default image URLs and dimensions of 200x400. You can replace the image URLs with actual image links as needed. Let me know if you need any further modifications!
 
