@@ -61,18 +61,31 @@ jobs:
     - name: Export Base Image
       run: |
         docker save base-image -o base-image.tar
+  
+    - uses: geekyeggo/delete-artifact@v5
+      with:
+          name: |
+              base-image.tar
+              allure-results-container-1
+              allure-results-container-2
+              allure-results-container-3
+              allure-results-container-4
+              combined-allure-results
+              allure-results
         
     - name: Upload Base Image
       uses: actions/upload-artifact@v3
       with:
         name: base-image
         path: base-image.tar
+        retention-days: 1
         
     - name: Upload Shard Workspace
       uses: actions/upload-artifact@v3
       with:
         name: shard-workspace
         path: shard-workspace
+        retention-days: 1
 
   build-and-test:
     name: Build and Test
@@ -121,6 +134,7 @@ jobs:
       with:
         name: allure-results-container-${{ matrix.container }}
         path: allure-results
+        retention-days: 1
 
   combine-allure-results:
     name: Combine Allure Results
