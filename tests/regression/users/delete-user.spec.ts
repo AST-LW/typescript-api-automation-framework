@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 describe("User Suite", () => {
-    it("@TEST_ID-5 - Successful user deletion", async () => {
+    it("@TEST_ID-5443 - Successful user deletion", async () => {
         const response = await Actions.user.successfulUserDeletion();
 
         expect(response.statusCode).toBe(200);

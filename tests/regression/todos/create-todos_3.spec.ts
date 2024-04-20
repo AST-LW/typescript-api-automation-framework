@@ -24,7 +24,7 @@ afterEach(() => {
 });
 
 describe("Create Todos Suite", () => {
-    it("@TEST_ID-1678 - Create a task successfully", async () => {
+    it("@TEST_ID-1578 - Create a task successfully", async () => {
         const data = RequestDataGenerator.createTaskPayload() as SuccessfulTaskCreationRequestModel;
 
         const response = await Actions.tasks.successfulTaskCreation(data);
@@ -37,8 +37,8 @@ describe("Create Todos Suite", () => {
     });
 
     const taskCreationIncompletePayload = [
-        { missingField: "title", testID: "@TEST_ID-2145" },
-        { missingField: "description", testID: "@TEST_ID-2891" },
+        { missingField: "title", testID: "@TEST_ID-2245" },
+        { missingField: "description", testID: "@TEST_ID-1891" },
     ];
 
     taskCreationIncompletePayload.forEach(({ missingField, testID }) => {

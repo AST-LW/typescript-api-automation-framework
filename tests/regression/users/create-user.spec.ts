@@ -21,7 +21,7 @@ afterEach(() => {
 });
 
 describe("User Suite", () => {
-    it("@TEST_ID-2 - Create a new user successfully", async () => {
+    it("@TEST_ID-1342 - Create a new user successfully", async () => {
         const data = RequestDataGenerator.createUserPayload() as SuccessfulUserCreationRequestModel;
 
         const response = await Actions.user.successfulUserCreation(data);
@@ -31,7 +31,7 @@ describe("User Suite", () => {
         expect(response.data?.access_token).toBeTruthy();
     });
 
-    it("@TEST_ID-3 - Unsuccessful creation of user, due to missing email field in the payload", async () => {
+    it("@TEST_ID-3454 - Unsuccessful creation of user, due to missing email field in the payload", async () => {
         const data = RequestDataGenerator.createUserPayload(["email"]) as WithoutEmailRequestModel; // Exclude email from the payload
 
         const response = await Actions.user.createUserWithoutEmail(data);
@@ -40,7 +40,7 @@ describe("User Suite", () => {
         expect(response.data?.error).toBe("Username, password, and email are required.");
     });
 
-    it("@TEST_ID-4 - Unsuccessful creation of user, with no payload", async () => {
+    it("@TEST_ID-4009 - Unsuccessful creation of user, with no payload", async () => {
         const data: any = {};
 
         const response = await Actions.user.createUserWithoutEmail(data);

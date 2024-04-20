@@ -26,14 +26,14 @@ afterEach(() => {
 });
 
 describe("Read Todos Suite", () => {
-    it("@TEST_ID-2443 - Todos must be empty for a newly created user", async () => {
+    it("@TEST_ID-2113 - Todos must be empty for a newly created user", async () => {
         const response = (await Actions.tasks.getTodos("new", {})) as ResponseConfig<GetTodosForNewUserResponseModel>;
 
         expect(response.statusCode).toBe(200);
         expect(response.data?.todos).toStrictEqual([]);
     });
 
-    it("@TEST_ID-1124 - Todos must be empty for a newly created user", async () => {
+    it("@TEST_ID-1024 - Todos must be empty for a newly created user", async () => {
         const userID = "6dd2e64d-fba5-4dae-b338-be80e32cbc6a";
 
         const response = (await Actions.tasks.getTodos("existing", {
@@ -44,7 +44,7 @@ describe("Read Todos Suite", () => {
         expect(response.data?.todos).toHaveLength(1);
     });
 
-    it("@TEST_ID-3425 - Fetching todos failed due to incorrect access token", async () => {
+    it("@TEST_ID-1425 - Fetching todos failed due to incorrect access token", async () => {
         const response = (await Actions.tasks.getTodos("new", {
             accessToken: "",
         })) as ResponseConfig<GetTodoWithoutAccessTokenResponseModel>;
