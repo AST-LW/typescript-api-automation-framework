@@ -33,7 +33,7 @@ describe("Read Todos Suite", () => {
         expect(response.data?.todos).toStrictEqual([]);
     });
 
-    it("@TEST_ID-1024 - Todos must be empty for a newly created user", async () => {
+    it("@TEST_ID-1078 - Todos must be empty for a newly created user", async () => {
         const userID = "6dd2e64d-fba5-4dae-b338-be80e32cbc6a";
 
         const response = (await Actions.tasks.getTodos("existing", {
