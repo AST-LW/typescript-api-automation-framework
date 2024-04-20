@@ -35,7 +35,7 @@ const extractAllureSummary = async () => {
             }
         }
 
-        summary["totalDurations"] = JSON.parse(
+        summary["totalDurationMs"] = JSON.parse(
             fs.readFileSync(process.cwd() + "/allure-report/history/duration-trend.json", "utf-8")
         )[0]["data"]["duration"];
 
