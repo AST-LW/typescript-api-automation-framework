@@ -20,9 +20,6 @@ const extractAllureSummary = async () => {
             const fileContent = fs.readFileSync(`${testCasesPath}` + "/" + filePath, "utf8");
             const testCase = JSON.parse(fileContent);
 
-            // Add up durations
-            summary.totalDurationMs += testCase.time.duration;
-
             // Count pass/fail/broken statuses
             switch (testCase.status) {
                 case "passed":
@@ -37,6 +34,10 @@ const extractAllureSummary = async () => {
                 // Add more cases if there are other statuses
             }
         }
+
+        summary["totalDurations"] = JSON.parse(
+            fs.readFileSync(process.cwd() + "/allure-report/history/duration-trend.json", "utf-8")
+        )[0]["data"]["duration"];
 
         // Additional metadata
         summary["env"] = process.env.ENV || "qa";
