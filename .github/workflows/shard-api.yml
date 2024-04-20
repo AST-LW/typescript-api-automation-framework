@@ -42,6 +42,9 @@ env:
   SHARDS: ${{ github.event.inputs.shards }}
   INSTANCES: ${{ github.event.inputs.instances }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+  RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+  REPORT_TO_SEND: ${{ vars.REPORT_TO_SEND }}
 
 jobs:
   build-base-image:
@@ -61,27 +64,16 @@ jobs:
     - name: Export Base Image
       run: |
         docker save base-image -o base-image.tar
-  
-    - uses: geekyeggo/delete-artifact@v5
-      with:
-          name: |
-              base-image.tar
-              allure-results-container-1
-              allure-results-container-2
-              allure-results-container-3
-              allure-results-container-4
-              combined-allure-results
-              allure-results
         
     - name: Upload Base Image
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: base-image
         path: base-image.tar
         retention-days: 1
         
     - name: Upload Shard Workspace
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: shard-workspace
         path: shard-workspace
@@ -99,12 +91,12 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Download Base Image
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: base-image
         
     - name: Download Shard Workspace
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: shard-workspace
         path: shard-workspace
@@ -130,7 +122,7 @@ jobs:
 
     - name: Upload Allure Results
       if: ${{ always() }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: allure-results-container-${{ matrix.container }}
         path: allure-results
@@ -141,23 +133,34 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
-      - name: Download Allure Results
-        uses: actions/download-artifact@v3
-        with:
-          path: allure-results
-
-      - name: Sample
+      - uses: actions/checkout@v4
+        with: 
+          sparse-checkout: |
+            scripts
+            src/utils
+            package.json
+      
+      - name: Npm install
         run: |
-          ls -a
+          npm ci
 
-      # - name: Combine Allure Results
-      #   run: |
-      #     mkdir -p combined-allure-results
-      #     find allure-results -name "*.xml" -exec cp {} combined-allure-results \;
-      #     find allure-results -name "*.txt" -exec cp {} combined-allure-results \;
+      - name: Download Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-results-container-*
+          merge-multiple: true
+          path: allure-results
+        
+      - name: Generate Allure Report and Send Notifications
+        run: |
+          bash scripts/util-scripts/generate-allure-report.sh
+          npx ts-node src/utils/test-summary-extractor.ts
+          bash scripts/util-scripts/slack-notification.sh
+          bash scripts/util-scripts/discord-notification.sh
+          bash scripts/util-scripts/email-notification.sh
 
-      # - name: Upload Combined Allure Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: combined-allure-results
-      #     path: combined-allure-results
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
