@@ -1,6 +1,12 @@
-# TypeScript Automation Framework
+# TypeScript API Automation Framework
 
-Welcome to the TypeScript Automation Framework repository! This framework is designed to streamline the process of writing and executing automated tests for various applications. Below is an overview of the folder structure, features and how to use this framework.
+Welcome to the TypeScript API Automation Framework repository! This framework is designed to streamline the process of writing and executing automated tests for various E2E API end-points.
+
+Below is an overview of the framework architecture, folder structure, features, how to use this framework and in-sights.
+
+## Framework Architecture
+
+![framework-architecture](./images/framework-structure.png)
 
 ## Folder Structure Mapping
 
@@ -61,17 +67,17 @@ Welcome to the TypeScript Automation Framework repository! This framework is des
 
 ## Feature Table
 
-| Feature                              | Description                                     | Status | Customizable | Images                                                         |
-| ------------------------------------ | ----------------------------------------------- | ------ | ------------ | -------------------------------------------------------------- |
-| Allure Report                        | Generates detailed test execution reports       | ✓      | Yes          | ![Allure Report](./images/allure-example-template.png)         |
-| Slack Notification                   | Sends test execution notifications to Slack     | ✓      | Yes          | ![Slack Notification](./images/slack-example-template.png)     |
-| Email Notification                   | Sends test execution notifications via email    | ✓      | Yes          | ![Email Notification](./images/email-example-template.png)     |
-| Discord Notification                 | Sends test execution notifications to Discord   | ✓      | Yes          | ![Discord Notification](./images/discord-example-template.png) |
-| Logging                              | Logs test execution details                     | ✓      | Yes          | ![Logging](./images/logs-example-template.png)                 |
-| CI/CD Integration (`Github Actions`) | Executes tests concurrently for faster run time | ✓      | Yes          | ![CI/CD Integration](./images/ci-cd-example-template.png)      |
-| Parallel Execution                   | Executes tests concurrently for faster run time | ✓      | Yes          |                                                                |
-
-I've added an "Images" section with default image URLs and dimensions of 200x400. You can replace the image URLs with actual image links as needed. Let me know if you need any further modifications!
+| Feature                                   | Description                                                                                                                 | Status | Customizable | Images                                                         |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------ | ------------ | -------------------------------------------------------------- |
+| Allure Report                             | Generates detailed test execution reports                                                                                   | ✓      | Yes          | ![Allure Report](./images/allure-example-template.png)         |
+| Slack Notification                        | Sends test execution notifications to Slack                                                                                 | ✓      | Yes          | ![Slack Notification](./images/slack-example-template.png)     |
+| Email Notification                        | Sends test execution notifications via email                                                                                | ✓      | Yes          | ![Email Notification](./images/email-example-template.png)     |
+| Discord Notification                      | Sends test execution notifications to Discord                                                                               | ✓      | Yes          | ![Discord Notification](./images/discord-example-template.png) |
+| Logging                                   | Logs test execution details                                                                                                 | ✓      | Yes          | ![Logging](./images/logs-example-template.png)                 |
+| CI/CD Integration (`Github Actions`)      | Executes tests concurrently for faster run time                                                                             | ✓      | Yes          | ![CI/CD Integration](./images/ci-cd-example-template.png)      |
+| Parallel Execution                        | Executes tests concurrently for faster run time                                                                             | ✓      | Yes          |                                                                |
+| Test Case Addition                        | Average of 5-10 min to write a new test case ( technical good with language syntax and API flow understanding is required ) | ✓      | N / A        |                                                                |
+| New Feature Addition within the framework | Ensures adding a new feature within the framework is decoupled and integration won't break                                  | ✓      | Yes          |                                                                |
 
 ## How to add the test case
 
@@ -172,13 +178,15 @@ API Endpoint ( Postman / Swagger / cURL command ) --> Identify Endpoint and Payl
     });
 
     // Test Case
-
     describe("User Suite", () => {
         it("@TEST_ID-1234 - Create a new user successfully", async () => {
+            // Arrange
             const data = RequestDataGenerator.createUserPayload() as SuccessfulUserCreationRequestModel;
 
+            // Act
             const response = await Actions.user.successfulUserCreation(data);
 
+            // Assert
             expect(response.statusCode).toBe(201);
             expect(response.data?.user_id).toBeTruthy();
             expect(response.data?.access_token).toBeTruthy();
@@ -196,7 +204,7 @@ API Endpoint ( Postman / Swagger / cURL command ) --> Identify Endpoint and Payl
     npm run test 1234
     ```
 
-You're absolutely right. Let's incorporate the `{ transient: true }` option in our explanation. Here's the revised version:
+# In-sights
 
 ## Usage of Service annotation
 
